@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Día 3 ✨</title>
 <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <style>
     body {
         background: #fef6f9;
@@ -61,19 +62,23 @@
     /* Ticket rosa */
     #ticket {
         display: none;
-        margin-top: 30px;
+        margin: 30px auto 0;
         background-color: #ffb6c1;
         color: #fff;
         font-size: 1.5rem;
         padding: 20px 40px;
         border-radius: 20px;
         box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        animation: pop 0.5s ease forwards;
+        width: 250px;
+        text-align: center;
+        position: relative;
     }
 
-    @keyframes pop {
-        0% { transform: scale(0.5); opacity: 0; }
-        100% { transform: scale(1); opacity: 1; }
+    #downloadBtn {
+        display: none;
+        margin-top: 20px;
+        background-color: #ff9acc;
+        color: white;
     }
 
     /* corazones animados */
@@ -102,12 +107,14 @@
 </div>
 
 <div id="ticket">🎟️ Válido por fotos mías 🎟️</div>
+<button id="downloadBtn">💾 Descargar Ticket</button>
 
 <script>
     const message = document.querySelector('.message');
     const noBtn = document.querySelector('.no');
     const yesBtn = document.querySelector('.yes');
     const ticket = document.getElementById('ticket');
+    const downloadBtn = document.getElementById('downloadBtn');
 
     noBtn.addEventListener('click', () => {
         message.textContent = "No lo queres? :( Yo sé que sí, ¡intentá de nuevo!";
@@ -115,14 +122,25 @@
     });
 
     yesBtn.addEventListener('click', () => {
-        message.textContent = "Te amo más!!! ❤️ Regalo para reclamar por chat :3";
+        message.textContent = "Te amo más!!! ❤️ Regalo reclamable por chat :3";
         noBtn.style.display = 'none';
         yesBtn.style.display = 'none';
         ticket.style.display = 'block';
+        downloadBtn.style.display = 'inline-block';
+
         // lanzar varios corazones
         for(let i=0; i<15; i++) {
             setTimeout(() => createHeart(yesBtn), i*150);
         }
+    });
+
+    downloadBtn.addEventListener('click', () => {
+        html2canvas(ticket).then(canvas => {
+            const link = document.createElement('a');
+            link.download = 'ticket.png';
+            link.href = canvas.toDataURL();
+            link.click();
+        });
     });
 
     function createHeart(btn) {
