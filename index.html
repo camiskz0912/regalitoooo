@@ -59,26 +59,30 @@
         color: white;
     }
 
-    /* Ticket rosa */
-    #ticket {
-        display: none;
-        margin: 30px auto 0;
-        background-color: #ffb6c1;
-        color: #fff;
-        font-size: 1.5rem;
-        padding: 20px 40px;
+    /* Ticket con tamaño pequeño */
+    #photo {
+        margin-top: 30px;
+        width: 200px; /* tamaño chico */
         border-radius: 20px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        width: 250px;
-        text-align: center;
-        position: relative;
+        display: none;
+        box-shadow: 0 8px 15px rgba(0,0,0,0.3);
     }
 
     #downloadBtn {
         display: none;
-        margin-top: 20px;
+        margin-top: 15px;
+        padding: 12px 25px;
+        font-size: 18px;
         background-color: #ff9acc;
         color: white;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    #downloadBtn:hover {
+        background-color: #ff85c1;
     }
 
     /* corazones animados */
@@ -103,17 +107,18 @@
 
 <div class="options">
     <button class="no">No lo kiero 😢</button>
-    <button class="yes">Si lo kiero, teamo!! 💖</button>
+    <button class="yes">Si lo kiero, teamo!!! 💖</button>
 </div>
 
-<div id="ticket">🎟️ Válido por fotos mías 🎟️</div>
+<img id="photo" src="ticket.png.png" alt="Ticket">
+
 <button id="downloadBtn">💾 Descargar Ticket</button>
 
 <script>
     const message = document.querySelector('.message');
     const noBtn = document.querySelector('.no');
     const yesBtn = document.querySelector('.yes');
-    const ticket = document.getElementById('ticket');
+    const photo = document.getElementById('photo');
     const downloadBtn = document.getElementById('downloadBtn');
 
     noBtn.addEventListener('click', () => {
@@ -122,10 +127,10 @@
     });
 
     yesBtn.addEventListener('click', () => {
-        message.textContent = "Te amo más!!! ❤️ Regalo reclamable por chat :3";
+        message.textContent = "Te amo más!!!! ❤️ Regalo reclamable en el chat :3";
         noBtn.style.display = 'none';
         yesBtn.style.display = 'none';
-        ticket.style.display = 'block';
+        photo.style.display = 'block';
         downloadBtn.style.display = 'inline-block';
 
         // lanzar varios corazones
@@ -135,7 +140,7 @@
     });
 
     downloadBtn.addEventListener('click', () => {
-        html2canvas(ticket).then(canvas => {
+        html2canvas(photo).then(canvas => {
             const link = document.createElement('a');
             link.download = 'ticket.png';
             link.href = canvas.toDataURL();
