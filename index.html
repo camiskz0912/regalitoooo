@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Día 3 ✨</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<style>
+    body {
+        background: #fef6f9;
+        color: #333;
+        font-family: 'Pacifico', cursive;
+        text-align: center;
+        padding: 40px 20px;
+        position: relative;
+        overflow-x: hidden;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        color: #ff5a8f;
+    }
+
+    .message {
+        margin-top: 30px;
+        font-size: 1.5rem;
+    }
+
+    .options {
+        margin-top: 40px;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+
+    button {
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: transform 0.2s, background 0.3s;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    button:hover {
+        transform: scale(1.05);
+    }
+
+    .yes {
+        background-color: #ff9acc;
+        color: white;
+    }
+
+    .no {
+        background-color: #ffc0cb;
+        color: white;
+    }
+
+    #photo {
+        margin-top: 30px;
+        max-width: 80%;
+        border-radius: 20px;
+        display: none;
+        box-shadow: 0 8px 15px rgba(0,0,0,0.3);
+    }
+
+    /* corazones animados */
+    .heart {
+        position: absolute;
+        font-size: 1.5rem;
+        color: #ff5a8f;
+        animation: floatUp 2s ease-out forwards;
+        pointer-events: none;
+    }
+
+    @keyframes floatUp {
+        0% { opacity: 1; transform: translateY(0) scale(1);}
+        100% { opacity: 0; transform: translateY(-150px) scale(1.5);}
+    }
+</style>
+</head>
+<body>
+
+<h1>El regalo del día está listo ✨</h1>
+<p class="message">¿Querés verlo?</p>
+
+<div class="options">
+    <button class="no">No lo kiero 😢</button>
+    <button class="yes">Sí lo kiero 💖</button>
+</div>
+
+<img id="photo" src="ticket.png" alt="Regalo">
+
+<script>
+    const message = document.querySelector('.message');
+    const noBtn = document.querySelector('.no');
+    const yesBtn = document.querySelector('.yes');
+    const photo = document.getElementById('photo');
+
+    noBtn.addEventListener('click', () => {
+        message.textContent = "No lo queres? :( Yo sé que sí, ¡intentá de nuevo!";
+        createHeart(noBtn);
+    });
+
+    yesBtn.addEventListener('click', () => {
+        message.textContent = "Te amo más ❤️ Regalo reclamable en el chat.";
+        noBtn.style.display = 'none';
+        yesBtn.style.display = 'none';
+        photo.style.display = 'block';
+        createHeart(yesBtn);
+        // lanzar varios corazones
+        for(let i=0; i<15; i++) {
+            setTimeout(() => createHeart(yesBtn), i*150);
+        }
+    });
+
+    function createHeart(btn) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.textContent = '💖';
+        document.body.appendChild(heart);
+        const rect = btn.getBoundingClientRect();
+        heart.style.left = (rect.left + rect.width/2 + (Math.random()*40-20)) + 'px';
+        heart.style.top = (rect.top + window.scrollY) + 'px';
+        setTimeout(() => heart.remove(), 2000);
+    }
+</script>
+
+</body>
+</html>
